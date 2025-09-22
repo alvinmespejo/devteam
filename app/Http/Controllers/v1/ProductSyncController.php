@@ -28,9 +28,9 @@ class ProductSyncController extends Controller
      *  - Scheduler - boostrap/app.php for setting up the scheduler which will be call by the cron job.
      *
      * @param Request $request
-     * @return void
+     * @return ApiSuccessResponse|ApiErrorResponse
      */
-    public function sync(Request $request)
+    public function sync(Request $request): ApiSuccessResponse | ApiErrorResponse
     {
         try {
             $response = Http::get('https://fakestoreapi.com/products');
