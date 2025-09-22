@@ -24,7 +24,7 @@ class ProductSyncController extends Controller
      * It is advisable to set up a cron job and use Laravel's task scheduling to call a command/job at regular intervals.
      *
      * See
-     *  - ProductSycnCommand - class is intended to be called by the scheduler for long running tasks.
+     *  - ProductSync - command class is intended to be called by the scheduler for long running tasks.
      *  - Scheduler - boostrap/app.php for setting up the scheduler which will be call by the cron job.
      *
      * @param Request $request
