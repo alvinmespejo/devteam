@@ -48,7 +48,7 @@ class ProductService
             ->whereIn('external_id', $prodIds)
             ->chunk(self::CHUNK_SIZE, function ($products) use ($productWithIdKeys, &$prodExistingIds) {
                 foreach ($products as $value) {
-                    $prodRespValue = $productWithIdKeys[$value->external_id];
+                    $prodRespValue = $productWithIdKeys[$value->external_id] ?? null;
                     if (!$prodRespValue) {
                         continue;
                     }

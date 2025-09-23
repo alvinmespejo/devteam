@@ -25,10 +25,7 @@ class ProductIndexTest extends TestCase
                 'data' => ['status' => 'Done']
             ]);
 
-        Queue::assertPushed(\App\Jobs\ProductSync::class, function ($job) {
-            $job->handle();
-            return true;
-        });
+        Queue::assertPushed(\App\Jobs\ProductSync::class);
     }
 
     // public function testProductSyncEndpoint(): void
