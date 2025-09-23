@@ -68,4 +68,13 @@ class ProductServiceTest extends TestCase
             ]);
         }
     }
+
+    public function testSyncProductThrowsInvalidArgumentExceptionOnemptyInput(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Invalid product data provided.');
+
+        $service = new ProductService();
+        $service->syncProduct([]);
+    }
 }
