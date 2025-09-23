@@ -2,13 +2,8 @@
 
 namespace Tests\Feature\Products;
 
-use App\Services\ProductService;
-use GuzzleHttp\Psr7\Query;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Queue;
-use Mockery;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
