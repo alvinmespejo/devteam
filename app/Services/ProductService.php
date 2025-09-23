@@ -33,7 +33,8 @@ class ProductService
          * Get all product ID's for data fetching, this will help minimize
          * http call to our DB.
          */
-        $prodIds = array_map(function ($product) { return $product['id']; }, $productResponse);
+        // $prodIds = array_map(function ($product) { return $product['id']; }, $productResponse);
+        $prodIds = array_column($productResponse, 'id');
         $prodExistingIds = [];
 
         /**

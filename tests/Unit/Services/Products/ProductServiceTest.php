@@ -69,7 +69,7 @@ class ProductServiceTest extends TestCase
         }
     }
 
-    public function testSyncProductThrowsInvalidArgumentExceptionOnemptyInput(): void
+    public function testSyncProductThrowsInvalidArgumentExceptionOnEmptyInput(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid product data provided.');

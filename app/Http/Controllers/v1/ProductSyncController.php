@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\ProductSync;
 use App\Response\ApiErrorResponse;
 use App\Response\ApiSuccessResponse;
 use App\Services\ProductService;
@@ -33,19 +34,20 @@ class ProductSyncController extends Controller
     public function sync(Request $request): ApiSuccessResponse | ApiErrorResponse
     {
         try {
-            $response = Http::get('https://fakestoreapi.com/products');
-            if (!$response->ok()) {
-                throw new \Exception('Failed to fetch products from external API');
-            }
+            // $response = Http::get('https://fakestoreapi.com/products');
+            // if (!$response->ok()) {
+            //     throw new \Exception('Failed to fetch products from external API');
+            // }
 
-            $productResponse = $response->json();
-            if (!count($productResponse)) {
-                return new ApiSuccessResponse(['status' => 'Done']);
-            }
+            // $productResponse = $response->json();
+            // if (!count($productResponse)) {
+            //     return new ApiSuccessResponse(['status' => 'Done']);
+            // }
 
-            DB::beginTransaction();
-            $this->service->syncProduct($productResponse);
-            DB::commit();
+            // DB::beginTransaction();
+            // $this->service->syncProduct($productResponse);
+            // DB::commit();
+            ProductSync::dispatch()->onConnection('database');
             return new ApiSuccessResponse(['status' => 'Done']);
         } catch (\Throwable $th) {
             DB::rollBack();
