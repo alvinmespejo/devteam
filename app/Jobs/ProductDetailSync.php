@@ -7,6 +7,7 @@ use App\Models\Product;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ProductDetailSync implements ShouldQueue
 {
@@ -45,6 +46,7 @@ class ProductDetailSync implements ShouldQueue
                             'created_at' => $product->createdAt,
                             'updated_at' => $product->updatedAt,
                         ];
+
                         continue;
                     }
 
@@ -71,7 +73,7 @@ class ProductDetailSync implements ShouldQueue
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            //throw $th;
+            Log::error('PRODUCT DETAIL SYNCING ERROR', [$th]);
         }
 
     }

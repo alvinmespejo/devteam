@@ -38,9 +38,9 @@ class ProductSync implements ShouldQueue
                 exit();
             }
 
-            DB::beginTransaction();
+            // DB::beginTransaction();
             $service->syncProduct($productResponse);
-            DB::commit();
+            // DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
             Log::error('PRODUCT SYNCING ERROR', [$th]);

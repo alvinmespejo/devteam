@@ -118,7 +118,6 @@ class ProductService
 
             $arrChunk = array_chunk($toInsertProducts, self::CHUNK_SIZE);
             foreach ($arrChunk as $chunk) {
-                // Product::insert($chunk);
                 ProductDetailSync::dispatch($chunk)->onConnection('database');
             }
         }
