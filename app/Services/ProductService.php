@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Jobs\ProductDetailSync;
 use App\Models\Product;
 use Exception;
 use InvalidArgumentException;
@@ -47,20 +48,26 @@ class ProductService
             ->with(['tags'])
             ->whereIn('external_id', $prodIds)
             ->chunk(self::CHUNK_SIZE, function ($products) use ($productWithIdKeys, &$prodExistingIds) {
+                $arrProdDTO = [];
                 foreach ($products as $value) {
                     $prodRespValue = $productWithIdKeys[$value->external_id] ?? null;
                     if (!$prodRespValue) {
                         continue;
                     }
 
-                    $value->name = $prodRespValue['title'];
-                    $value->price = $prodRespValue['price'];
-                    $value->category = $prodRespValue['category'];
-                    $value->description = $prodRespValue['description'];
-                    $value->image = $prodRespValue['image'];
-                    $value->rating = $prodRespValue['rating']['rate'];
-                    $value->count = $prodRespValue['rating']['count'];
-                    $value->save();
+                    $prodDTO = new \App\Dto\Api\v1\ProductDTO(
+                        (int) $value->id,
+                        $prodRespValue['id'],
+                        $prodRespValue['title'],
+                        $prodRespValue['price'],
+                        $prodRespValue['description'],
+                        $prodRespValue['category'],
+                        $prodRespValue['image'],
+                        $prodRespValue['rating']['rate'],
+                        $prodRespValue['rating']['count'],
+                    );
+
+                    $arrProdDTO[] = $prodDTO;
 
                     $prodExistingIds[] = $value->external_id;
 
@@ -74,6 +81,8 @@ class ProductService
                     //     $tag->name;
                     // }
                 }
+
+                ProductDetailSync::dispatch($arrProdDTO)->onConnection('database');
             });
 
         /**
@@ -90,23 +99,27 @@ class ProductService
                 }
 
                 $currentTime = now();
-                $toInsertProducts[] = [
-                    'external_id' => $product['id'],
-                    'name' => $product['title'],
-                    'price' => $product['price'],
-                    'category' => $product['category'],
-                    'description' => $product['description'],
-                    'image' => $product['image'],
-                    'rating' => $product['rating']['rate'],
-                    'count' => $product['rating']['count'],
-                    'created_at' => $currentTime,
-                    'updated_at' => $currentTime,
-                ];
+                $prodDTO = new \App\Dto\Api\v1\ProductDTO(
+                    null,
+                    $product['id'],
+                    $product['title'],
+                    $product['price'],
+                    $product['description'],
+                    $product['category'],
+                    $product['image'],
+                    $product['rating']['rate'],
+                    $product['rating']['count'],
+                    createdAt: $currentTime,
+                    updatedAt: $currentTime,
+                );
+
+                $toInsertProducts[] = $prodDTO;
             }
 
             $arrChunk = array_chunk($toInsertProducts, self::CHUNK_SIZE);
             foreach ($arrChunk as $chunk) {
-                Product::insert($chunk);
+                // Product::insert($chunk);
+                ProductDetailSync::dispatch($chunk)->onConnection('database');
             }
         }
     }
