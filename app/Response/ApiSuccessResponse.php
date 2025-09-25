@@ -3,8 +3,8 @@
 namespace App\Response;
 
 use Illuminate\Contracts\Support\Responsable;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
 
 class ApiSuccessResponse implements Responsable
 {
@@ -26,7 +26,7 @@ class ApiSuccessResponse implements Responsable
     {
         $response = [];
         if ($this->data) {
-            if (!is_array($this->data) && $this->data->collection) {
+            if (!is_array($this->data) && $this->data->collection instanceof Collection) {
                 $response = $this->data;
             } else {
                 $response['data'] = $this->data;

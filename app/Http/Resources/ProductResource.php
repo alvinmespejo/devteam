@@ -34,24 +34,7 @@ class ProductResource extends ResourceCollection
             ];
     }
 
-    // public function paginationInformation($request, $paginated, $default)
-    // {
-    //     dd($default, $paginated);
-    //     return [
-    //         'meta' => [
-    //             'pagination' => [
-    //                 'current_page' => $paginated['current_page'],
-    //                 'from' => $paginated['from'],
-    //                 'first_page_url' => $paginated['first_page_url'],
-    //                 'last_page' => $paginated['last_page'],
-    //                 'last_page_url' => $paginated['last_page_url'],
-    //                 'per_page' => $paginated['per_page'],
-    //                 'to' => $paginated['to'],
-    //                 'total' => $paginated['total'],
-    //             ],
-    //             'links' => $paginated['links']
-    //         ],
-    //     ];
-
-    // }
+    public function paginationInformation($request, $paginated, $default)
+    {
+    }
 }
