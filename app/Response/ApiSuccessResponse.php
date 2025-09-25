@@ -26,7 +26,11 @@ class ApiSuccessResponse implements Responsable
     {
         $response = [];
         if ($this->data) {
-            $response['data'] = $this->data;
+            if (!is_array($this->data) && $this->data->collection) {
+                $response = $this->data;
+            } else {
+                $response['data'] = $this->data;
+            }
         }
 
         if ($this->metadata) {

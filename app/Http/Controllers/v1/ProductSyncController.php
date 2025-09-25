@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use App\Jobs\ProductSync;
+use App\Models\Product;
 use App\Response\ApiErrorResponse;
 use App\Response\ApiSuccessResponse;
 use App\Services\ProductService;
@@ -16,6 +18,14 @@ class ProductSyncController extends Controller
 {
     public function __construct(protected ProductService $service)
     {
+    }
+
+    public function index(Request $request)
+    {
+        return new ApiSuccessResponse(
+            new ProductResource(Product::paginate(8))
+        );
+
     }
 
     /**
