@@ -5,7 +5,6 @@ namespace App\Dto\Api\v1;
 class ProductDTO
 {
     /**
-     * Undocumented function
      *
      * @param integer|null $id
      * @param integer|null $externalId
