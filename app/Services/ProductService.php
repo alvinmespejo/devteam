@@ -76,7 +76,7 @@ class ProductService
                      * This is just a placeholder, adjust according to your needs.
                      */
 
-                    // $tags = $value->tags;
+                    // $tags = $value->tags->each(fn($tag) => $tag->update([]));
                     // foreach ($tags as $tag) {
                     //     $tag->name;
                     // }
