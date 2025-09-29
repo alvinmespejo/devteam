@@ -2,6 +2,8 @@
 
 namespace App\Dto\Api\v1;
 
+use Carbon\Carbon;
+
 class ProductDTO
 {
     /**
@@ -26,8 +28,8 @@ class ProductDTO
         public readonly string $image,
         public readonly string|float $ratingRate,
         public readonly string|int $ratingCount,
-        public readonly ?string $createdAt = null,
-        public readonly ?string $updatedAt = null,
+        public readonly ?Carbon $createdAt = null,
+        public readonly ?Carbon $updatedAt = null,
     ) {
     }
 }
