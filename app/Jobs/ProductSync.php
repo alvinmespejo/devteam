@@ -36,7 +36,6 @@ class ProductSync implements ShouldQueue
                     return true;
                 }
             })
-            ->timeout(3)
             ->get('https://fakestoreapi.com/products');
 
             $response->throw();
