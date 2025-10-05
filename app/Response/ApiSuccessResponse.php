@@ -3,6 +3,7 @@
 namespace App\Response;
 
 use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response;
 use Illuminate\Support\Collection;
 
@@ -29,7 +30,9 @@ class ApiSuccessResponse implements Responsable
             if (!is_array($this->data) && $this->data->collection instanceof Collection) {
                 $response = $this->data;
             } else {
-                $response['data'] = $this->data;
+                $response = is_null(JsonResource::$wrap)
+                    ? $this->data
+                    : ['data' => $this->data];
             }
         }
 

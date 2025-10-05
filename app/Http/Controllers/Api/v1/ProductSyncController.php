@@ -23,7 +23,7 @@ class ProductSyncController extends Controller
     public function index(Request $request)
     {
         return new ApiSuccessResponse(
-            new ProductResource(Product::paginate(4))
+            new ProductResource(Product::paginate(5))
         );
 
     }

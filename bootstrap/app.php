@@ -20,8 +20,9 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command('app:product-sync')
-            ->everyMinute() ## change this to hourly or daily as needed
+            ->everyOddHour() ## change this to hourly or daily as needed
             ->evenInMaintenanceMode()
             ->withoutOverlapping();
+        $schedule->command('telescope:prune')->daily();
     })
     ->create();
