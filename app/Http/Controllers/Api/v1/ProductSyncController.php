@@ -11,7 +11,6 @@ use App\Response\ApiSuccessResponse;
 use App\Services\ProductService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class ProductSyncController extends Controller
